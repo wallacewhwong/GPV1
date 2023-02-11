@@ -35,6 +35,9 @@ public class MainActivity extends AppCompatActivity {
 
     Button btn_loadJson;
     ListView lv_tracklist;
+    TextView tv_result;
+    DataService dataService;
+    JSONArray tracks;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,35 +46,13 @@ public class MainActivity extends AppCompatActivity {
 
         btn_loadJson = findViewById(R.id.btn_loadJson);
         lv_tracklist = findViewById(R.id.lv_tracklist);
+        tv_result = findViewById(R.id.tv_result);
 
         btn_loadJson.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                final TextView textView = (TextView) findViewById(R.id.tv_result);
-
-            // Instantiate the RequestQueue.
-                RequestQueue queue = Volley.newRequestQueue(MainActivity.this);
-                String url = "https://www.lcsd.gov.hk/datagovhk/facility/facility-fw.json";
-
-                // Request a string response from the provided URL.
-
-                JsonArrayRequest stringRequest = new JsonArrayRequest(Request.Method.GET, url,null,
-                        new Response.Listener<JSONArray>() {
-                            @Override
-                            public void onResponse(JSONArray response) {
-                                // Display the first 500 characters of the response string.
-                                textView.setText("Response is: " + response.toString());
-                            }
-                        }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        textView.setText("That didn't work!");
-                    }
-                });
-
-                // Add the request to the RequestQueue.
-                queue.add(stringRequest);
+                dataService = new DataService(MainActivity.this);
+                dataService.getTrackJsons();
 
             }
         });  // end button

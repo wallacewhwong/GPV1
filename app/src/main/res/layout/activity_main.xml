@@ -18,6 +18,7 @@
         android:id="@+id/tv_result"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
+
     <ListView
         android:id="@+id/lv_tracklist"
         android:layout_width="match_parent"
