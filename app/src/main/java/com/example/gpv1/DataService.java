@@ -21,7 +21,12 @@ public class DataService {
         this.context = context;
     }
 
-    public void getTrackJsons() {
+    public interface DataServiceListener{
+        void onResponse(JSONArray response);
+        void onError(String msg);
+    }
+
+    public void getTrackJsons(DataServiceListener dataServiceListener) {
 
         // Instantiate the RequestQueue.
         RequestQueue queue = Volley.newRequestQueue(context);
@@ -32,14 +37,12 @@ public class DataService {
                 new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray response) {
-
-                        Log.e("abc",response.toString());
-
+                        dataServiceListener.onResponse(response);
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                  Log.e("abc",error.toString());
+                dataServiceListener.onError("Something wrong");
             }
         });
 
