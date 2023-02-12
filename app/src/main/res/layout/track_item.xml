@@ -5,6 +5,12 @@
     android:orientation="horizontal"
     android:padding="10dp">
 
+    <ImageView
+        android:id="@+id/iv_mapimage"
+        android:scaleType="centerCrop"
+        android:layout_width="80dp"
+        android:layout_height="80dp"/>
+
     <TextView
         android:id="@+id/tv_title"
         android:layout_weight="2"

@@ -5,7 +5,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -39,12 +42,16 @@ public class TrackAdaptor extends BaseAdapter {
 
         View view = LayoutInflater.from(context).inflate(R.layout.track_item, parent,false);
         TextView tv_title, tv_district;
+        ImageView iv_mapImage;
 
         tv_title = view.findViewById(R.id.tv_title);
         tv_district = view.findViewById(R.id.tv_district);
+        iv_mapImage = view.findViewById(R.id.iv_mapimage);
 
         tv_title.setText(trackModels.get(position).title);
         tv_district.setText(trackModels.get(position).district);
+
+        Picasso.get().load(trackModels.get(position).mapurl).into(iv_mapImage);
 
         return view;
     }

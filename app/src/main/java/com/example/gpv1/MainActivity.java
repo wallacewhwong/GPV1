@@ -2,9 +2,11 @@ package com.example.gpv1;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -28,10 +30,11 @@ import java.util.ArrayList;
 //  Volley http
 //  https://google.github.io/volley/simple.html
 //
+//  get image from url
+//  https://square.github.io/picasso/
 //
-//
-//
-//
+//  Animation reference
+// https://gist.github.com/codinginflow/6d606f12f4db20f5133fc90a42a1b9c5
 //
 
 
@@ -56,7 +59,6 @@ public class MainActivity extends AppCompatActivity {
         lv_tracklist = findViewById(R.id.lv_tracklist);
         tv_result = findViewById(R.id.tv_result);
 
-
         btn_loadJson.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -79,10 +81,36 @@ public class MainActivity extends AppCompatActivity {
             }
         });  // end button
 
+        // listview onItemClick
+        lv_tracklist.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                Intent i = new Intent(MainActivity.this, TrackDetailActivity.class);
+
+                TrackModel selectedTrack = tracksArrayList.get(position);
+
+                Log.e("abc",selectedTrack.toString());
+
+                i.putExtra("title",selectedTrack.title);
+                i.putExtra("district",selectedTrack.district);
+                i.putExtra("route",selectedTrack.route);
+                i.putExtra("howToAccess",selectedTrack.howToAccess);
+                i.putExtra("mapurl",selectedTrack.mapurl);
+                i.putExtra("latitude", selectedTrack.latitude);
+                i.putExtra("longitude",selectedTrack.longitude);
+
+
+                startActivity(i);
+
+            }
+        });
 
     }  // end oncreate
 
     private void convertJsonToArray(JSONArray jsonArray){
+
+        Language language = new Language();
 
         for(int x=1; x<=jsonArray.length()-1; x++){
 
@@ -91,13 +119,37 @@ public class MainActivity extends AppCompatActivity {
                 TrackModel trackModel = new TrackModel();
                 JSONObject jsonObject = jsonArray.getJSONObject(x);
 
-                trackModel.title = jsonObject.getString("Title_en");
-                trackModel.district = jsonObject.getString("District_en");
-                trackModel.howToAccess = jsonObject.getString("HowToAccess_en");
-                trackModel.route = jsonObject.getString("Route_en");
-                trackModel.latitude = jsonObject.getDouble("Latitude");
-                trackModel.longitude = jsonObject.getDouble("Longitude");
-                trackModel.mapurl = jsonObject.getString("MapURL_en");
+                if (language.language.equals("en")) {
+
+                    trackModel.title = jsonObject.getString("Title_en");
+                    trackModel.district = jsonObject.getString("District_en");
+                    trackModel.howToAccess = jsonObject.getString("HowToAccess_en");
+                    trackModel.route = jsonObject.getString("Route_en");
+                    trackModel.latitude = jsonObject.getDouble("Latitude");
+                    trackModel.longitude = jsonObject.getDouble("Longitude");
+                    trackModel.mapurl = jsonObject.getString("MapURL_en");
+
+                } else if (language.language.equals("tc")){
+
+                    trackModel.title = jsonObject.getString("Title_tc");
+                    trackModel.district = jsonObject.getString("District_tc");
+                    trackModel.howToAccess = jsonObject.getString("HowToAccess_tc");
+                    trackModel.route = jsonObject.getString("Route_tc");
+                    trackModel.latitude = jsonObject.getDouble("Latitude");
+                    trackModel.longitude = jsonObject.getDouble("Longitude");
+                    trackModel.mapurl = jsonObject.getString("MapURL_tc");
+
+                } else if (language.language.equals("sc")){
+
+                    trackModel.title = jsonObject.getString("Title_sc");
+                    trackModel.district = jsonObject.getString("District_sc");
+                    trackModel.howToAccess = jsonObject.getString("HowToAccess_sc");
+                    trackModel.route = jsonObject.getString("Route_sc");
+                    trackModel.latitude = jsonObject.getDouble("Latitude");
+                    trackModel.longitude = jsonObject.getDouble("Longitude");
+                    trackModel.mapurl = jsonObject.getString("MapURL_sc");
+                }  // end if
+
 
                 tracksArrayList.add(trackModel);
 
