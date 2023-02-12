@@ -1,9 +1,12 @@
 package com.example.gpv1;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityOptionsCompat;
+import androidx.core.view.ViewCompat;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.transition.Fade;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -35,6 +38,9 @@ import java.util.ArrayList;
 //
 //  Animation reference
 // https://gist.github.com/codinginflow/6d606f12f4db20f5133fc90a42a1b9c5
+//
+//  Google map intent
+//  https://developers.google.com/maps/documentation/urls/android-intents
 //
 
 
@@ -100,8 +106,21 @@ public class MainActivity extends AppCompatActivity {
                 i.putExtra("latitude", selectedTrack.latitude);
                 i.putExtra("longitude",selectedTrack.longitude);
 
+                // animation
+                Fade fade = new Fade();
 
-                startActivity(i);
+                getWindow().setEnterTransition(fade);
+                getWindow().setExitTransition(fade);
+
+
+                View imageView =findViewById(R.id.iv_mapimage);
+
+                ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(
+                        MainActivity.this, imageView, ViewCompat.getTransitionName(imageView));
+
+                startActivity(i, options.toBundle());
+
+//                startActivity(i);
 
             }
         });

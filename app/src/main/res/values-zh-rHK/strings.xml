@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">GPV1</string>
+    <string name="app_name">GPV1 HK</string>
     <string name="loadJson">加載JSON 繁體</string>
+    <string name="google_map">Google Map HK</string>
+    <string name="google_nav">Google Navigation HK</string>
 </resources>
